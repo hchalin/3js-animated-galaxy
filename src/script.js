@@ -101,8 +101,11 @@ const generateGalaxy = () => {
     scales[i] = Math.random()
   }
 
+
+
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute("aScale", new THREE.BufferAttribute(scales, 1))
 
   /**
    * Material
@@ -114,7 +117,7 @@ const generateGalaxy = () => {
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     uniforms: {
-      uSize: { value: 1.0 },
+      uSize: { value: 8 * renderer.getPixelRatio() },
     },
   });
 
@@ -125,40 +128,46 @@ const generateGalaxy = () => {
   scene.add(points);
 };
 
-generateGalaxy();
 
-gui
-  .add(parameters, "count")
-  .min(100)
-  .max(1000000)
-  .step(100)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameters, "radius")
-  .min(0.01)
-  .max(20)
-  .step(0.01)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameters, "branches")
-  .min(2)
-  .max(20)
-  .step(1)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameters, "randomness")
-  .min(0)
-  .max(2)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui
-  .add(parameters, "randomnessPower")
-  .min(1)
-  .max(10)
-  .step(0.001)
-  .onFinishChange(generateGalaxy);
-gui.addColor(parameters, "insideColor").onFinishChange(generateGalaxy);
-gui.addColor(parameters, "outsideColor").onFinishChange(generateGalaxy);
+/**
+ * ADD TO GUI FN
+ */
+const addGui  = () => {
+
+    gui
+    .add(parameters, "count")
+    .min(100)
+    .max(1000000)
+    .step(100)
+    .onFinishChange(generateGalaxy);
+    gui
+    .add(parameters, "radius")
+    .min(0.01)
+    .max(20)
+    .step(0.01)
+    .onFinishChange(generateGalaxy);
+    gui
+    .add(parameters, "branches")
+    .min(2)
+    .max(20)
+    .step(1)
+    .onFinishChange(generateGalaxy);
+    gui
+    .add(parameters, "randomness")
+    .min(0)
+    .max(2)
+    .step(0.001)
+    .onFinishChange(generateGalaxy);
+    gui
+    .add(parameters, "randomnessPower")
+    .min(1)
+    .max(10)
+    .step(0.001)
+    .onFinishChange(generateGalaxy);
+    gui.addColor(parameters, "insideColor").onFinishChange(generateGalaxy);
+    gui.addColor(parameters, "outsideColor").onFinishChange(generateGalaxy);
+}
+addGui()
 
 /**
  * Sizes
@@ -210,6 +219,11 @@ const renderer = new THREE.WebGLRenderer({
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/**
+ * GENEREATE GALAXY
+ */
+generateGalaxy();
 
 /**
  * Animate
