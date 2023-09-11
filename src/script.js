@@ -117,6 +117,7 @@ const generateGalaxy = () => {
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     uniforms: {
+      uTime: {value: 1.0},
       uSize: { value: 30.0 * renderer.getPixelRatio() },
     },
   });
@@ -233,6 +234,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  //Update material
+  material.uniforms.uTime.value = elapsedTime
 
   // Update controls
   controls.update();
