@@ -2,6 +2,8 @@ uniform float uSize;
 
 attribute float aScale;
 
+varying vec3 vColor;
+
  void main(){
    /**
   * Position
@@ -16,6 +18,11 @@ attribute float aScale;
   * Points
   */
   gl_PointSize = uSize * aScale;
-  // Add size attenuation 
-   gl_PointSize *= ( 1.0 / - viewPosition.z );
+  // Add size attenuation
+  gl_PointSize *= ( 1.0 / - viewPosition.z );
+
+  /**
+  *
+  */
+  vColor = color;
  }
